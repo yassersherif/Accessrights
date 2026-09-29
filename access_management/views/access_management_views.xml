@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="access_management_action" model="ir.actions.act_window">
+        <field name="name">Access Management</field>
+        <field name="res_model">access.management</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_active': 1}</field>
+    </record>
+
+    <menuitem id="access_management_menu_root"
+              name="Access Management"
+              sequence="90"
+              groups="access_management.access_management_group_manager"
+              web_icon="access_management,static/description/icon.png"/>
+
+    <menuitem id="access_management_menu_profiles"
+              name="Profiles"
+              parent="access_management_menu_root"
+              action="access_management_action"
+              sequence="10"
+              groups="access_management.access_management_group_manager"/>
+
+    <record id="access_management_view_list" model="ir.ui.view">
+        <field name="name">access.management.list</field>
+        <field name="model">access.management</field>
+        <field name="arch" type="xml">
+            <list string="Access Management" multi_edit="1">
+                <field name="name" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit': True, 'no_open': True}" />
+                <field name="user_ids" widget="many2many_tags"/>
+                <field name="active"/>
+                <field name="read_only"/>
+                <field name="create_uid" optional="hide"/>
+                <field name="write_date" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="access_management_view_search" model="ir.ui.view">
+        <field name="name">access.management.search</field>
+        <field name="model">access.management</field>
+        <field name="arch" type="xml">
+            <search string="Search Access Profiles">
+                <field name="name" />
+            </search>
+        </field>
+    </record>
+
+    <record id="access_management_view_form" model="ir.ui.view">
+        <field name="name">access.management.form</field>
+        <field name="model">access.management</field>
+        <field name="arch" type="xml">
+            <form string="Access Management">
+                <header>
+                    <button name="toggle_active"
+                            type="object"
+                            string="Activate/Deactivate"
+                            class="btn-primary"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </header>
+
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_rules"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-list">
+                            <field name="rule_count"
+                                   widget="statinfo"
+                                   string="Access Rules"/>
+                        </button>
+                    </div>
+
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="Profile name"/>
+                        </h1>
+                    </div>
+
+                    <div class="alert alert-warning"
+                         invisible="not overlap_warning">
+                        <field name="overlap_warning"
+                               nolabel="1"
+                               readonly="1"/>
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="user_ids" widget="many2many_tags"/>
+                            <field name="read_only"/>
+                            <field name="apply_without_company"/>
+                        </group>
+                        <group>
+                            <field name="disable_developer_mode"/>
+                            <field name="create_uid" readonly="1"/>
+                            <field name="create_date" readonly="1"/>
+                            <field name="write_uid" readonly="1"/>
+                            <field name="write_date" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Hide Menu">
+                            <field name="menu_rule_ids">
+                                <list editable="bottom">
+                                    <field name="menu_id" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit': True, 'no_open': True}" />
+                                    <field name="hide_menu"/>
+                                    <field name="note"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Model Access">
+                            <field name="model_rule_ids">
+                                <list editable="bottom">
+                                    <field name="model_id" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit': True, 'no_open': True}" />
+                                    <field name="perm_read"/>
+                                    <field name="perm_create"/>
+                                    <field name="perm_write"/>
+                                    <field name="perm_unlink"/>
+                                    <field name="apply_filter"/>
+                                    <field name="note"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Field Access">
+                            <field name="field_rule_ids">
+                                <list editable="bottom">
+                                    <field name="model_id" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit': True, 'no_open': True}" />
+                                    <field name="field_id" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit': True, 'no_open': True}" />
+                                    <field name="perm_read"/>
+                                    <field name="perm_write"/>
+                                    <field name="invisible"/>
+                                    <field name="readonly"/>
+                                    <field name="note"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Domain Access">
+                            <field name="domain_rule_ids">
+                                <list editable="bottom">
+                                    <field name="model_id" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit': True, 'no_open': True}" />
+                                    <field name="domain"/>
+                                    <field name="perm_read"/>
+                                    <field name="perm_create"/>
+                                    <field name="perm_write"/>
+                                    <field name="perm_unlink"/>
+                                    <field name="apply_filter"/>
+                                    <field name="note"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Button/Tab Access">
+                            <field name="button_rule_ids">
+                                <list editable="bottom">
+                                    <field name="model_id" options="{'no_create': True, 'no_quick_create': True,'no_create_edit': True,'no_open': True}"/>
+                                    <field name="button_name" string="Hide Button"/>
+                                    <field name="page_name" string="Hide Tab/Page"/>
+                                    <field name="hide_kanban_link" string="Hide Kanban Link"/>
+                                    <!-- نخفي الحقول الفنية المستخدمة في منطق القاعدة -->
+<!--                                    <field name="restriction_type" invisible="1"/>-->
+<!--                                    <field name="view_id" optional="hide" options="{'no_create': True, 'no_quick_create': True,'no_create_edit': True, 'no_open': True}"/>-->
+<!--                                    <field name="button_label" optional="hide"/>-->
+<!--                                    <field name="hide_button" optional="hide"/>-->
+<!--                                    <field name="disable_button" optional="hide"/>-->
+<!--                                    <field name="note" optional="hide"/>-->
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Search Panel Access">
+                            <field name="search_panel_rule_ids">
+                                <list editable="bottom">
+                                    <field name="model_id" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit': True, 'no_open': True}" />
+                                    <field name="view_id" string="Specific View (optional)" optional="hide" options="{'no_create': True,'no_quick_create': True,'no_create_edit': True,'no_open': True}"/>
+                                    <field name="field_id" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit': True, 'no_open': True}" />
+                                    <field name="invisible"/>
+                                    <field name="note"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Chatter">
+                            <field name="chatter_rule_ids">
+                                <list editable="bottom">
+                                    <field name="model_id" options="{'no_create': True, 'no_quick_create': True, 'no_create_edit': True, 'no_open': True}" />
+                                    <field name="view_chatter"/>
+                                    <field name="read_messages"/>
+                                    <field name="post_messages"/>
+                                    <field name="edit_messages"/>
+                                    <field name="delete_messages"/>
+                                    <field name="add_attachments"/>
+                                    <field name="download_attachments"/>
+                                    <field name="manage_followers"/>
+                                    <field name="view_activities"/>
+                                    <field name="create_activities"/>
+                                    <field name="edit_activities"/>
+                                    <field name="delete_activities"/>
+                                    <field name="note"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Global">
+                            <group>
+                                <group string="Scoped Server Restrictions">
+                                    <field name="global_model_ids"
+                                           widget="many2many_tags"/>
+                                    <field name="global_disable_create"/>
+                                    <field name="global_disable_write"/>
+                                    <field name="global_disable_delete"/>
+                                </group>
+                                <group string="Client / Integration Settings">
+                                    <field name="restrict_import"/>
+                                    <field name="restrict_export"/>
+                                    <field name="restrict_technical_menus"/>
+                                    <field name="disable_developer_mode"/>
+                                </group>
+                            </group>
+
+                            <div class="o_form_label">
+                                Global restrictions are only enforced when a model is selected. Native Odoo security always remains in effect.
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

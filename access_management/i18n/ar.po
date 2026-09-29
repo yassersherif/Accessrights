@@ -1,0 +1,18 @@
+# Arabic translations for access_management.
+msgid "Access Management"
+msgstr "إدارة الصلاحيات"
+
+msgid "Profiles"
+msgstr "ملفات الصلاحيات"
+
+msgid "Hide Menu"
+msgstr "إخفاء القائمة"
+
+msgid "Model Access"
+msgstr "صلاحيات النموذج"
+
+msgid "Field Access"
+msgstr "صلاحيات الحقول"
+
+msgid "Domain Access"
+msgstr "صلاحيات النطاق"

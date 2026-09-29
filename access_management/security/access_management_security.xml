@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Application category -->
+    <record id="access_management_module_category"
+            model="ir.module.category">
+        <field name="name">Access Management</field>
+        <field name="sequence">90</field>
+    </record>
+
+    <!-- Odoo 19: Group privilege -->
+    <record id="access_management_privilege"
+            model="res.groups.privilege">
+        <field name="name">Access Management</field>
+        <field name="category_id"
+               ref="access_management_module_category"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Manager group -->
+    <record id="access_management_group_manager"
+            model="res.groups">
+        <field name="name">Access Management Manager</field>
+        <field name="privilege_id"
+               ref="access_management_privilege"/>
+    </record>
+
+    <!-- Recovery Administrator group -->
+    <record id="access_management_group_recovery"
+            model="res.groups">
+        <field name="name">
+            Access Management Recovery Administrator
+        </field>
+        <field name="privilege_id"
+               ref="access_management_privilege"/>
+        <field name="implied_ids"
+               eval="[(4, ref('access_management_group_manager'))]"/>
+    </record>
+
+</odoo>
