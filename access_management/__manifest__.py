@@ -1,10 +1,10 @@
 {
     'name': 'Access Management',
-    'summary': 'Conservative, profile-based access restrictions',
+    'summary': 'Advanced access management for Odoo',
     'version': '19.0.1.0.0',
     'category': 'Administration/Technical',
     'license': 'LGPL-3',
-    'author': 'Custom',
+    'author': 'Yasser Sherif',
     'depends': ['base', 'web', 'mail'],
     'data': [
         'security/access_management_security.xml',
