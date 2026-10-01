@@ -3,9 +3,15 @@
     'summary': 'Advanced access management for Odoo',
     'version': '19.0.1.0.0',
     'category': 'Administration/Technical',
-    'license': 'LGPL-3',
     'author': 'Yasser Sherif',
-    'depends': ['base', 'web', 'mail'],
+    'website': '',
+    'support': 'sakamintooo@gmail.com',
+    'license': 'LGPL-3',
+    'depends': [
+        'base',
+        'web',
+        'mail',
+    ],
     'data': [
         'security/access_management_security.xml',
         'security/ir.model.access.csv',
@@ -13,4 +19,6 @@
     ],
     'application': True,
     'installable': True,
+    'price': 49.99,
+    'currency': 'USD',
 }
